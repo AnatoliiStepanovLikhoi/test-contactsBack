@@ -26,11 +26,19 @@ const register = async (req, res) => {
     await newUser.setPassword(password);
     newUser.save();
 
+    console.log(newUser);
+
+    const payload = {
+      id: newUser.id,
+    };
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
+
     const hashPassword = newUser.password;
 
     res
       .status(201)
-      .json({ user: { password: hashPassword, email, avatarURL } });
+      .json({ user: { password: hashPassword, email, avatarURL, token } });
   } catch (error) {
     console.log(error);
     res.status(500).json("server error");
@@ -103,7 +111,7 @@ const logout = async (req, res, next) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: tempUpload, filename } = req.file;
- 
+
   try {
     const avatarName = `${_id}_${filename}`;
     const resultUpload = path.join(avatarsDir, avatarName);

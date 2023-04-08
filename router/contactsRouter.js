@@ -18,15 +18,15 @@ const {
 
 const contactsRouter = express.Router();
 
-contactsRouter.get("/", getContacts);
+contactsRouter.get("/", auth, getContacts);
 
 // contactsRouter.get("/", auth, getBooks);
 
 // contactsRouter.get("/:bookId", auth, getBookById);
 
-contactsRouter.post("/", contactValidation, addContact);
+contactsRouter.post("/", auth, contactValidation, addContact);
 
-contactsRouter.delete("/:contactId", removeContact);
+contactsRouter.delete("/:contactId", auth, removeContact);
 
 // contactsRouter.put("/:bookId", auth, putValidation, updateBookById);
 

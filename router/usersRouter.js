@@ -20,7 +20,7 @@ router.post("/register", registerValidation, register);
 
 router.post("/login", registerValidation, login);
 
-router.post("/current", auth, getCurrent);
+router.get("/current", auth, getCurrent);
 
 router.post("/logout", auth, logout);
 
